@@ -1,3 +1,9 @@
+<?php
+
+session_start();
+include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,15 +19,15 @@
     <!-- Remove Tap Highlight on Windows Phone IE -->
     <meta name="msapplication-tap-highlight" content="no">
     <!-- base css -->
-    <link id="vendorsbundle" rel="stylesheet" media="screen, print" href="css/vendors.bundle.css">
-    <link id="appbundle" rel="stylesheet" media="screen, print" href="css/app.bundle.css">
+    <link id="vendorsbundle" rel="stylesheet" media="screen, print" href="/assets/css/vendors.bundle.css">
+    <link id="appbundle" rel="stylesheet" media="screen, print" href="/assets/css/app.bundle.css">
     <link id="mytheme" rel="stylesheet" media="screen, print" href="#">
-    <link id="myskin" rel="stylesheet" media="screen, print" href="css/skins/skin-master.css">
+    <link id="myskin" rel="stylesheet" media="screen, print" href="/assets/css/skins/skin-master.css">
     <!-- Place favicon.ico in the root directory -->
-    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
-    <link rel="mask-icon" href="img/favicon/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="stylesheet" media="screen, print" href="css/fa-brands.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png">
+    <link rel="mask-icon" href="/assets/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="stylesheet" media="screen, print" href="/assets/css/fa-brands.css">
 </head>
 <body>
     <div class="page-wrapper auth">
@@ -31,14 +37,14 @@
                     <div class="d-flex align-items-center container p-0">
                         <div class="page-logo width-mobile-auto m-0 align-items-center justify-content-center p-0 bg-transparent bg-img-none shadow-0 height-9 border-0">
                             <a href="javascript:void(0)" class="page-logo-link press-scale-down d-flex align-items-center">
-                                <img src="img/logo.png" alt="SmartAdmin WebApp" aria-roledescription="logo">
+                                <img src="/assets/img/logo.png" alt="SmartAdmin WebApp" aria-roledescription="logo">
                                 <span class="page-logo-text mr-1">Учебный проект</span>
                             </a>
                         </div>
                         <span class="text-white opacity-50 ml-auto mr-2 hidden-sm-down">
                             Уже зарегистрированы?
                         </span>
-                        <a href="page_login.html" class="btn-link text-white ml-auto ml-sm-0">
+                        <a href="/login/" class="btn-link text-white ml-auto ml-sm-0">
                             Войти
                         </a>
                     </div>
@@ -59,19 +65,30 @@
                             </div>
                             <div class="col-xl-6 ml-auto mr-auto">
                                 <div class="card p-4 rounded-plus bg-faded">
-                                    <div class="alert alert-danger text-dark" role="alert">
-                                        <strong>Уведомление!</strong> Этот эл. адрес уже занят другим пользователем.
-                                    </div>
-                                    <form id="js-login" novalidate="" action="">
+                                    <?php if(isset($_SESSION['danger'])):?>
+                                        <div class="alert alert-danger text-dark" role="alert">
+                                            <?php
+                                                displayFlashMessage('danger');
+                                            ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if(isset($_SESSION['success'])):?>
+                                        <div class="alert alert-success text-dark" role="alert">
+                                            <?php
+                                                displayFlashMessage('success');
+                                            ?>
+                                        </div>
+                                    <?php endif; ?>  
+                                    <form id="js-login" novalidate="" action="/register/register.php" method="POST">
                                         <div class="form-group">
                                             <label class="form-label" for="emailverify">Email</label>
-                                            <input type="email" id="emailverify" class="form-control" placeholder="Эл. адрес" required>
+                                            <input name="email" type="email" id="emailverify" class="form-control" placeholder="Эл. адрес" required>
                                             <div class="invalid-feedback">Заполните поле.</div>
                                             <div class="help-block">Эл. адрес будет вашим логином при авторизации</div>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label" for="userpassword">Пароль <br></label>
-                                            <input type="password" id="userpassword" class="form-control" placeholder="" required>
+                                            <input name="password" type="password" id="userpassword" class="form-control" placeholder="" required>
                                             <div class="invalid-feedback">Заполните поле.</div>
                                         </div>
                                        
@@ -90,7 +107,7 @@
         </div>
     </div>
     
-    <script src="js/vendors.bundle.js"></script>
+    <script src="/assets/js/vendors.bundle.js"></script>
     <script>
         $("#js-login-btn").click(function(event)
         {
