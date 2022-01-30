@@ -11,8 +11,9 @@ $data = getUserByEmail($pdo, $email);
 
 if (! empty($data)) {
     if (checkPassword($pdo, $password, $data['password'])) {
-        setFlashMessage('success', 'Авторизация прошла успешно.');
         $_SESSION['email'] = $email;
+        $_SESSION['role'] = $data['role'];
+        setFlashMessage('success', 'Авторизация прошла успешно.');
         redirect("/users/");
         exit;
     }

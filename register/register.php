@@ -17,4 +17,4 @@ addUser($pdo, $email, $password);
 
 setFlashMessage('success', 'Регистрация прошла успешно.');
 
-redirect("/login/");
+redirect("/users/");
