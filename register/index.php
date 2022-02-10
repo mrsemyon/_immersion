@@ -1,8 +1,12 @@
 <?php
-
 session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
+if (isset($_SESSION['email'])) {
+    setFlashMessage('success', 'Вы уже зарегистрированы');
+    redirect('/users/');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,20 +69,13 @@ include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
                             </div>
                             <div class="col-xl-6 ml-auto mr-auto">
                                 <div class="card p-4 rounded-plus bg-faded">
-                                    <?php if(isset($_SESSION['danger'])):?>
+                                    <?php if (isset($_SESSION['danger'])):?>
                                         <div class="alert alert-danger text-dark" role="alert">
                                             <?php
                                                 displayFlashMessage('danger');
                                             ?>
                                         </div>
                                     <?php endif; ?>
-                                    <?php if(isset($_SESSION['success'])):?>
-                                        <div class="alert alert-success text-dark" role="alert">
-                                            <?php
-                                                displayFlashMessage('success');
-                                            ?>
-                                        </div>
-                                    <?php endif; ?>  
                                     <form id="js-login" novalidate="" action="/register/register.php" method="POST">
                                         <div class="form-group">
                                             <label class="form-label" for="emailverify">Email</label>

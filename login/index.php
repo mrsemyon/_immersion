@@ -1,8 +1,12 @@
 <?php
-
 session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
+if (isset($_SESSION['email'])) {
+    setFlashMessage('success', 'Вы уже авторизованы');
+    redirect('/users/');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,17 +43,10 @@ include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
             </a>
         </div>
         <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
-            <?php if(isset($_SESSION['danger'])):?>
+            <?php if (isset($_SESSION['danger'])):?>
                 <div class="alert alert-danger text-dark" role="alert">
                     <?php
                         displayFlashMessage('danger');
-                    ?>
-                </div>
-            <?php endif; ?>
-            <?php if(isset($_SESSION['success'])):?>
-                <div class="alert alert-success text-dark" role="alert">
-                    <?php
-                        displayFlashMessage('success');
                     ?>
                 </div>
             <?php endif; ?>

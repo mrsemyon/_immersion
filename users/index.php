@@ -3,13 +3,14 @@
 session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
-if (empty($_SESSION['email'])) {
+if (! isset($_SESSION['email'])) {
+    setFlashMessage('danger', 'Необходима авторизация');
     redirect('/login/');
+    exit;
 }
 
 $pdo = createPDO();
 $users = getUsersList($pdo);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,9 +49,20 @@ $users = getUsersList($pdo);
             </div>
         </nav>
         <main id="js-page-content" role="main" class="page-content mt-3">
-            <div class="alert alert-success">
-                Профиль успешно обновлен.
-            </div>
+        <?php if(isset($_SESSION['danger'])):?>
+                <div class="alert alert-danger text-dark" role="alert">
+                    <?php
+                        displayFlashMessage('danger');
+                    ?>
+                </div>
+            <?php endif; ?>
+            <?php if(isset($_SESSION['success'])):?>
+                <div class="alert alert-success text-dark" role="alert">
+                    <?php
+                        displayFlashMessage('success');
+                    ?>
+                </div>
+            <?php endif; ?>
             <div class="subheader">
                 <h1 class="subheader-title">
                     <i class='subheader-icon fal fa-users'></i> Список пользователей
@@ -58,8 +70,9 @@ $users = getUsersList($pdo);
             </div>
             <div class="row">
                 <div class="col-xl-12">
-                    <a class="btn btn-success" href="create_user.html">Добавить</a>
-
+                    <?php if ($_SESSION['role'] == 'admin') { ?>
+                    <a class="btn btn-success" href="/create_user/">Добавить</a>
+                    <?php } ?>
                     <div class="border-faded bg-faded p-3 mb-g d-flex mt-3">
                         <input type="text" id="js-filter-contacts" name="filter-contacts" class="form-control shadow-inset-2 form-control-lg" placeholder="Найти пользователя">
                         <div class="btn-group btn-group-lg btn-group-toggle hidden-lg-down ml-3" data-toggle="buttons">
@@ -83,8 +96,8 @@ $users = getUsersList($pdo);
                                         <span class="rounded-circle profile-image d-block " style="background-image:url('/assets/img/demo/avatars/<?=$user['photo']?>'); background-size: cover;"></span>
                                     </span>
                                     <div class="info-card-text flex-1">
-                                        <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
-                                            <?=$user['name']?>
+                                        <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">                                            
+                                            <?=$user['position'] ?? ''?>
                                             <?php if ($_SESSION['role'] == 'admin' || $user['email'] == $_SESSION['email']) { ?>
                                                 <i class="fal fas fa-cog fa-fw d-inline-block ml-1 fs-md"></i>
                                                 <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
@@ -109,7 +122,7 @@ $users = getUsersList($pdo);
                                                 Удалить
                                             </a>
                                         </div>
-                                        <span class="text-truncate text-truncate-xl"><?=$user['position']?></span>
+                                        <span class="text-truncate text-truncate-xl"><?=$user['position'] ?? ''?></span>
                                     </div>
                                     <button class="js-expand-btn btn btn-sm btn-default d-none" data-toggle="collapse" data-target="#c_8 > .card-body + .card-body" aria-expanded="false">
                                         <span class="collapsed-hidden">+</span>
@@ -119,12 +132,12 @@ $users = getUsersList($pdo);
                             </div>
                             <div class="card-body p-0 collapse show">
                                 <div class="p-3">
-                                    <a href="tel:+13174562564" class="mt-1 d-block fs-sm fw-400 text-dark">
-                                        <i class="fas fa-mobile-alt text-muted mr-2"></i><?=$user['phone']?></a>
+                                    <a href="tel:<?=$user['phone'] ?? ''?>" class="mt-1 d-block fs-sm fw-400 text-dark">
+                                        <i class="fas fa-mobile-alt text-muted mr-2"></i><?=$user['phone'] ?? ''?></a>
                                     <a href="mailto:oliver.kopyov@smartadminwebapp.com" class="mt-1 d-block fs-sm fw-400 text-dark">
-                                        <i class="fas fa-mouse-pointer text-muted mr-2"></i><?=$user['work_email']?></a>
+                                        <i class="fas fa-mouse-pointer text-muted mr-2"></i><?=$user['email'] ?? ''?></a>
                                     <address class="fs-sm fw-400 mt-4 text-muted">
-                                        <i class="fas fa-map-pin mr-2"></i><?=$user['address']?></address>
+                                        <i class="fas fa-map-pin mr-2"></i><?=$user['address'] ?? ''?></address>
                                     <div class="d-flex flex-row">
                                         <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#4680C2">
                                             <i class="fab fa-vk"></i>
