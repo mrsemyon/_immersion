@@ -33,12 +33,7 @@ if ($_SESSION['role'] != 'admin') {
                     <a class="nav-link" href="/users/">Главная <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto">
-                <?php if (empty($_SESSION['email'])) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login/">Войти</a>
-                    </li>                    
-                <?php } ?>
+            <ul class="navbar-nav ml-auto">               
                 <li class="nav-item">
                     <a class="nav-link" href="/login/logout.php">Выйти</a>
                 </li>
@@ -65,7 +60,7 @@ if ($_SESSION['role'] != 'admin') {
                 <i class='subheader-icon fal fa-plus-circle'></i> Добавить пользователя
             </h1>
         </div>
-        <form action="/create_user/create_user.php" method="POST" enctype="multipart/form-data>
+        <form action="/create_user/create_user.php" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -126,12 +121,14 @@ if ($_SESSION['role'] != 'admin') {
                                 <div class="form-group">
                                     <label class="form-label" for="example-select">Выберите статус</label>
                                     <select name="status" class="form-control" id="example-select">
-                                        <option>Онлайн</option>
-                                        <option>Отошел</option>
-                                        <option>Не беспокоить</option>
+                                        <option value="success">Онлайн</option>
+                                        <option value="danger">Отошел</option>
+                                        <option value="warning">Не беспокоить</option>
+                                        <option value="unknown">Не установлен</option>
                                     </select>
                                 </div>
 
+                                <!-- photo -->
                                 <div class="form-group">
                                     <label class="form-label" for="example-fileinput">Загрузить аватар</label>
                                     <input name="photo" type="file" id="example-fileinput" class="form-control-file">
@@ -161,7 +158,7 @@ if ($_SESSION['role'] != 'admin') {
                                                     </span>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control border-left-0 bg-transparent pl-0">
+                                            <input name="vk" type="text" class="form-control border-left-0 bg-transparent pl-0">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -175,7 +172,7 @@ if ($_SESSION['role'] != 'admin') {
                                                     </span>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control border-left-0 bg-transparent pl-0">
+                                            <input name="telegram" type="text" class="form-control border-left-0 bg-transparent pl-0">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -189,7 +186,7 @@ if ($_SESSION['role'] != 'admin') {
                                                     </span>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control border-left-0 bg-transparent pl-0">
+                                            <input name="instagram" type="text" class="form-control border-left-0 bg-transparent pl-0">
                                         </div>
                                     </div>
                                     <div class="col-md-12 mt-3 d-flex flex-row-reverse">

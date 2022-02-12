@@ -10,26 +10,25 @@ if ($_SESSION['role'] != 'admin') {
 
 $pdo = createPDO();
 $email = $_POST['email'];
-$password = $_POST['password'];
 
-// if (! empty(getUserByEmail($pdo, $email))) {
-//     setFlashMessage('danger', '<strong>Уведомление!</strong> Этот эл. адрес уже занят другим пользователем.');
-//     redirect("/create_user/");
-//     exit;
-// }
-?>
-<pre>
-    <?=var_dump($_POST)?>
-</pre>
-// addUser($pdo, $email, $password);
+if (! empty(getUserByEmail($pdo, $email))) {
+    setFlashMessage('danger', '<strong>Уведомление!</strong> Этот эл. адрес уже занят другим пользователем.');
+    redirect("/create_user/");
+    exit;
+}
 
-// $status = isset($_POST['status']) ?? '';
-// $name = isset($_POST['name']) ?? '';
-// $position = isset($_POST['position']) ?? '';
-// $phone = isset($_POST['phone']) ?? '';
-// $address = isset($_POST['address']) ?? '';
+$photo = (! empty($_FILES['photo'])) ? prepareUserPhoto($_FILES['photo']) : '';
 
+$id = addUser($pdo, $email, $_POST['password']);
 
+setUserInfo( $pdo, $id, $_POST['name'], $_POST['phone'], $_POST['address'], $_POST['position']);
 
-// editInfo($pdo, $status, $name, $position, $phone, $address);
+setUserSocialLinks($pdo, $id, $_POST['vk'], $_POST['telegram'], $_POST['instagram']);
 
+setUserStatus($pdo, $id, $_POST['status']);
+
+setUserPhoto($pdo, $id, $photo);
+
+setFlashMessage('success', 'Пользователь успешно добавлен!');
+redirect("/users/");
+exit;

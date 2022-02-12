@@ -14,6 +14,8 @@ if (!empty(getUserByEmail($pdo, $email))) {
 }
 
 addUser($pdo, $email, $password);
+$_SESSION['email'] = $email;
+$_SESSION['role'] = 'user';
 
 setFlashMessage('success', 'Регистрация прошла успешно.');
 redirect("/users/");

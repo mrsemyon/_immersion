@@ -12,4 +12,5 @@ function addUser($pdo, $email, $password)
             'role' => 'user',
         ]
     );
+    return $pdo->lastInsertId();
 }

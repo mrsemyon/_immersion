@@ -33,15 +33,13 @@ $users = getUsersList($pdo);
             <div class="collapse navbar-collapse" id="navbarColor02">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Главная <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/users/">Главная <span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <?php if (empty($_SESSION['email'])) { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/login/">Войти</a>
-                        </li>                    
-                    <?php } ?>
+                    <li class="nav-item">
+                        <span class="nav-link"><?=$_SESSION['email']?></span>
+                    </li>   
                     <li class="nav-item">
                         <a class="nav-link" href="/login/logout.php">Выйти</a>
                     </li>
@@ -92,12 +90,12 @@ $users = getUsersList($pdo);
                         <div id="c_8" class="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="arica grace">
                             <div class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
                                 <div class="d-flex flex-row align-items-center">
-                                    <span class="status status-success mr-3">
+                                    <span class="status status-<?=$user['status']?> mr-3">
                                         <span class="rounded-circle profile-image d-block " style="background-image:url('/assets/img/demo/avatars/<?=$user['photo']?>'); background-size: cover;"></span>
                                     </span>
                                     <div class="info-card-text flex-1">
-                                        <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">                                            
-                                            <?=$user['position'] ?? ''?>
+                                        <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
+                                            <?=$user['name']?>
                                             <?php if ($_SESSION['role'] == 'admin' || $user['email'] == $_SESSION['email']) { ?>
                                                 <i class="fal fas fa-cog fa-fw d-inline-block ml-1 fs-md"></i>
                                                 <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
@@ -106,13 +104,13 @@ $users = getUsersList($pdo);
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="edit.html">
                                                 <i class="fa fa-edit"></i>
-                                            Редактировать</a>
+                                                Редактировать</a>
                                             <a class="dropdown-item" href="security.html">
                                                 <i class="fa fa-lock"></i>
-                                            Безопасность</a>
+                                                Безопасность</a>
                                             <a class="dropdown-item" href="status.html">
                                                 <i class="fa fa-sun"></i>
-                                            Установить статус</a>
+                                                Установить статус</a>
                                             <a class="dropdown-item" href="media.html">
                                                 <i class="fa fa-camera"></i>
                                                 Загрузить аватар
@@ -122,7 +120,7 @@ $users = getUsersList($pdo);
                                                 Удалить
                                             </a>
                                         </div>
-                                        <span class="text-truncate text-truncate-xl"><?=$user['position'] ?? ''?></span>
+                                        <span class="text-truncate text-truncate-xl"><?=$user['position']?></span>
                                     </div>
                                     <button class="js-expand-btn btn btn-sm btn-default d-none" data-toggle="collapse" data-target="#c_8 > .card-body + .card-body" aria-expanded="false">
                                         <span class="collapsed-hidden">+</span>
@@ -132,20 +130,26 @@ $users = getUsersList($pdo);
                             </div>
                             <div class="card-body p-0 collapse show">
                                 <div class="p-3">
-                                    <a href="tel:<?=$user['phone'] ?? ''?>" class="mt-1 d-block fs-sm fw-400 text-dark">
-                                        <i class="fas fa-mobile-alt text-muted mr-2"></i><?=$user['phone'] ?? ''?></a>
-                                    <a href="mailto:oliver.kopyov@smartadminwebapp.com" class="mt-1 d-block fs-sm fw-400 text-dark">
-                                        <i class="fas fa-mouse-pointer text-muted mr-2"></i><?=$user['email'] ?? ''?></a>
+                                    <a href="tel:<?=$user['phone']?>" class="mt-1 d-block fs-sm fw-400 text-dark">
+                                        <i class="fas fa-mobile-alt text-muted mr-2"></i>
+                                        <?=$user['phone']?>
+                                    </a>
+                                    <a href="mailto:<?=$user['email']?>" class="mt-1 d-block fs-sm fw-400 text-dark">
+                                        <i class="fas fa-mouse-pointer text-muted mr-2"></i>
+                                        <?=$user['email']?>
+                                    </a>
                                     <address class="fs-sm fw-400 mt-4 text-muted">
-                                        <i class="fas fa-map-pin mr-2"></i><?=$user['address'] ?? ''?></address>
+                                        <i class="fas fa-map-pin mr-2"></i>
+                                        <?=$user['address']?>
+                                    </address>
                                     <div class="d-flex flex-row">
-                                        <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#4680C2">
+                                        <a href="<?=$user['vk']?>" class="mr-2 fs-xxl" style="color:#4680C2">
                                             <i class="fab fa-vk"></i>
                                         </a>
-                                        <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#38A1F3">
+                                        <a href="<?=$user['telegram']?>" class="mr-2 fs-xxl" style="color:#38A1F3">
                                             <i class="fab fa-telegram"></i>
                                         </a>
-                                        <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#E1306C">
+                                        <a href="<?=$user['instagram']?>" class="mr-2 fs-xxl" style="color:#E1306C">
                                             <i class="fab fa-instagram"></i>
                                         </a>
                                     </div>
