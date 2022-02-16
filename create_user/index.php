@@ -122,8 +122,8 @@ if ($_SESSION['role'] != 'admin') {
                                     <label class="form-label" for="example-select">Выберите статус</label>
                                     <select name="status" class="form-control" id="example-select">
                                         <option value="success">Онлайн</option>
-                                        <option value="danger">Отошел</option>
-                                        <option value="warning">Не беспокоить</option>
+                                        <option value="warning">Отошел</option>
+                                        <option value="danger">Не беспокоить</option>
                                         <option value="unknown">Не установлен</option>
                                     </select>
                                 </div>

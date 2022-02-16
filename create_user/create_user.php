@@ -17,7 +17,9 @@ if (! empty(getUserByEmail($pdo, $email))) {
     exit;
 }
 
-$photo = (! empty($_FILES['photo'])) ? prepareUserPhoto($_FILES['photo']) : '';
+$photo = (! empty($_FILES['photo']['name']))
+	? prepareUserPhoto($_FILES['photo'])
+	: 'no_photo.jpg';
 
 $id = addUser($pdo, $email, $_POST['password']);
 
