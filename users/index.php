@@ -102,7 +102,7 @@ $users = getUsersList($pdo);
                                             <?php } ?>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="edit.html">
+                                            <a class="dropdown-item" href="/edit/?id=<?=$user['id']?>">
                                                 <i class="fa fa-edit"></i>
                                                 Редактировать</a>
                                             <a class="dropdown-item" href="security.html">
