@@ -11,13 +11,21 @@ if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     exit;
 }
 
+$data = $_POST;
+
+foreach ($data as $key => $value) {
+    if ($value == '') {
+        $data[$key] = $user[$key];
+    }
+}
+
 setUserInfo(
     $pdo,
-    $_POST['id'],
-    $_POST['name'],
-    $_POST['phone'],
-    $_POST['address'],
-    $_POST['position']
+    $data['id'],
+    $data['name'],
+    $data['phone'],
+    $data['address'],
+    $data['position']
 );
 
 setFlashMessage('success', 'Информация успешно обновлена.');

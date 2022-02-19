@@ -2,14 +2,15 @@
 session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
+$pdo = createPDO();
+$user = getUserById($pdo, $_GET['id']);
+
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     setFlashMessage('danger', 'У Вас недостаточно прав');
     redirect('/users/');
     exit;
 }
 
-$pdo = createPDO();
-$user = getUserById($pdo, $_GET['id']);
 $title = "Редактировать пользователя";
 
 include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
