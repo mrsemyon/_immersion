@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
@@ -94,8 +93,8 @@ $users = getUsersList($pdo);
                                         <span class="rounded-circle profile-image d-block " style="background-image:url('/upload/<?=$user['photo']?>'); background-size: cover;"></span>
                                     </span>
                                     <div class="info-card-text flex-1">
+                                        <a href="/profile/?id=<?=$user['id']?>"><?=$user['name']?></a>
                                         <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
-                                            <?=$user['name']?>
                                             <?php if ($_SESSION['role'] == 'admin' || $user['email'] == $_SESSION['email']) { ?>
                                                 <i class="fal fas fa-cog fa-fw d-inline-block ml-1 fs-md"></i>
                                                 <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
