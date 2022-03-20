@@ -77,7 +77,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
                                             <a class="dropdown-item" href="/security/?id=<?=$user['id']?>">
                                                 <i class="fa fa-lock"></i>
                                                 Безопасность</a>
-                                            <a class="dropdown-item" href="status.html">
+                                            <a class="dropdown-item" href="/status/?id=<?=$user['id']?>">
                                                 <i class="fa fa-sun"></i>
                                                 Установить статус</a>
                                             <a class="dropdown-item" href="media.html">
