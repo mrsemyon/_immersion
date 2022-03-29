@@ -6,7 +6,7 @@ $user = getUserById($pdo, $_GET['id']);
 
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     setFlashMessage('danger', 'У Вас недостаточно прав');
-    redirect('/users/');
+    redirect('/');
     exit;
 }
 
@@ -23,4 +23,4 @@ if ($user['email'] == $_SESSION['email']) {
     redirect('/login/');
 }
 
-redirect('/users/');
+redirect('/');

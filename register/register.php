@@ -16,5 +16,5 @@ $_SESSION['email'] = $email;
 $_SESSION['role'] = 'user';
 
 setFlashMessage('success', 'Регистрация прошла успешно.');
-redirect("/users/");
+redirect("/");
 exit;

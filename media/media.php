@@ -6,7 +6,7 @@ $user = getUserById($pdo, $_POST['id']);
 
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     setFlashMessage('danger', 'У Вас недостаточно прав');
-    redirect('/users/');
+    redirect('/');
     exit;
 }
 if ($user['photo'] != 'no_photo.jpg') {
@@ -20,5 +20,5 @@ $photo = (! empty($_FILES['photo']['name']))
 setUserPhoto($pdo, $user['id'], $photo);
 
 setFlashMessage('success', 'Аватар успешно обновлён.');
-redirect("/users/");
+redirect("/");
 exit;

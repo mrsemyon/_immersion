@@ -3,7 +3,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
 if ($_SESSION['role'] != 'admin') {
     setFlashMessage('danger', 'У Вас недостаточно прав');
-    redirect('/users/');
+    redirect('/');
     exit;
 }
 
@@ -31,5 +31,5 @@ setUserStatus($pdo, $id, $_POST['status']);
 setUserPhoto($pdo, $id, $photo);
 
 setFlashMessage('success', 'Пользователь успешно добавлен!');
-redirect("/users/");
+redirect("/");
 exit;

@@ -6,13 +6,13 @@ $user = getUserById($pdo, $_POST['id']);
 
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     setFlashMessage('danger', 'У Вас недостаточно прав');
-    redirect('/users/');
+    redirect('/');
     exit;
 }
 
 if (empty($_POST['password']) && ($user['email'] == $_POST['email'])) {
     setFlashMessage('danger', 'Информация не была обновлена');
-    redirect('/users/');
+    redirect('/');
     exit;
 }
 
@@ -20,7 +20,7 @@ if (! empty($_POST['email'])) {
     if ($_POST['email'] != $user['email']) {
         if (!empty(getUserByEmail($pdo, $_POST['email']))) {
             setFlashMessage('danger', 'Этот адрес уже занят другим пользователем.');
-            redirect("/users/");
+            redirect("/");
             exit;
         }
         changeEmail($pdo, $user['id'], $_POST['email']);
@@ -35,5 +35,5 @@ if (! empty($_POST['password'])) {
 }
 
 setFlashMessage('success', 'Информация успешно обновлена.');
-redirect("/users/");
+redirect("/");
 exit;
