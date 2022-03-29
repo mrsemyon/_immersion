@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 function addUser($pdo, $email, $password)
 {
@@ -13,6 +14,34 @@ function addUser($pdo, $email, $password)
         ]
     );
     return $pdo->lastInsertId();
+}
+
+function changeEmail($pdo, $id, $email)
+{
+    $sql = "UPDATE users SET
+        email = :email
+        WHERE id = :id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(
+        [
+            'id' => $id,
+            'email' => $email,
+        ]
+    );
+}
+
+function changePassword($pdo, $id, $password)
+{
+    $sql = "UPDATE users SET
+        password = :password
+        WHERE id = :id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(
+        [
+            'id' => $id,
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+        ]
+    );
 }
 
 function checkPassword($pdo, $inputPassword, $dbPassword)
@@ -48,6 +77,14 @@ function getUserByEmail($pdo, $email)
     $sql = "SELECT * FROM users WHERE email=:email";
     $statement = $pdo->prepare($sql);
     $statement->execute(['email' => $email]);
+    return $statement->fetch();
+}
+
+function getUserById($pdo, $id)
+{
+    $sql = "SELECT * FROM users WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['id' => $id]);
     return $statement->fetch();
 }
 
@@ -153,4 +190,11 @@ function setUserStatus($pdo, $id, $status)
             'status' => $status,
         ]
     );
+}
+
+function deleteUser($pdo, $id)
+{
+    $sql = "DELETE FROM users WHERE id = :id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['id' => $id]);
 }

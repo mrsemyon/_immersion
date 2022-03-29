@@ -1,6 +1,4 @@
 <?php
-
-session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
 if (! isset($_SESSION['email'])) {
@@ -11,41 +9,11 @@ if (! isset($_SESSION['email'])) {
 
 $pdo = createPDO();
 $users = getUsersList($pdo);
+$title = "Список пользователей";
+
+include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <meta name="description" content="Chartist.html">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
-    <link id="vendorsbundle" rel="stylesheet" media="screen, print" href="/assets/css/vendors.bundle.css">
-    <link id="appbundle" rel="stylesheet" media="screen, print" href="/assets/css/app.bundle.css">
-    <link id="myskin" rel="stylesheet" media="screen, print" href="/assets/css/skins/skin-master.css">
-    <link rel="stylesheet" media="screen, print" href="/assets/css/fa-solid.css">
-    <link rel="stylesheet" media="screen, print" href="/assets/css/fa-brands.css">
-    <link rel="stylesheet" media="screen, print" href="/assets/css/fa-regular.css">
-</head>
-    <body class="mod-bg-1 mod-nav-link">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-primary-gradient">
-            <a class="navbar-brand d-flex align-items-center fw-500" href="/users/"><img alt="logo" class="d-inline-block align-top mr-2" src="/assets/img/logo.png"> Учебный проект</a> <button aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarColor02" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarColor02">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/users/">Главная <span class="sr-only">(current)</span></a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <span class="nav-link"><?=$_SESSION['email']?></span>
-                    </li>   
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login/logout.php">Выйти</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+
         <main id="js-page-content" role="main" class="page-content mt-3">
         <?php if(isset($_SESSION['danger'])):?>
                 <div class="alert alert-danger text-dark" role="alert">
@@ -94,28 +62,28 @@ $users = getUsersList($pdo);
                                         <span class="rounded-circle profile-image d-block " style="background-image:url('/upload/<?=$user['photo']?>'); background-size: cover;"></span>
                                     </span>
                                     <div class="info-card-text flex-1">
+                                        <a href="/profile/?id=<?=$user['id']?>"><?=$user['name']?></a>
                                         <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
-                                            <?=$user['name']?>
                                             <?php if ($_SESSION['role'] == 'admin' || $user['email'] == $_SESSION['email']) { ?>
                                                 <i class="fal fas fa-cog fa-fw d-inline-block ml-1 fs-md"></i>
                                                 <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
                                             <?php } ?>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="edit.html">
+                                            <a class="dropdown-item" href="/edit/?id=<?=$user['id']?>">
                                                 <i class="fa fa-edit"></i>
                                                 Редактировать</a>
-                                            <a class="dropdown-item" href="security.html">
+                                            <a class="dropdown-item" href="/security/?id=<?=$user['id']?>">
                                                 <i class="fa fa-lock"></i>
                                                 Безопасность</a>
-                                            <a class="dropdown-item" href="status.html">
+                                            <a class="dropdown-item" href="/status/?id=<?=$user['id']?>">
                                                 <i class="fa fa-sun"></i>
                                                 Установить статус</a>
-                                            <a class="dropdown-item" href="media.html">
+                                            <a class="dropdown-item" href="/media/?id=<?=$user['id']?>">
                                                 <i class="fa fa-camera"></i>
                                                 Загрузить аватар
                                             </a>
-                                            <a href="#" class="dropdown-item" onclick="return confirm('are you sure?');">
+                                            <a href="/delete_user/?id=<?=$user['id']?>" class="dropdown-item" onclick="return confirm('are you sure?');">
                                                 <i class="fa fa-window-close"></i>
                                                 Удалить
                                             </a>

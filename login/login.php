@@ -1,6 +1,4 @@
 <?php
-
-session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
 $pdo = createPDO();
@@ -13,6 +11,7 @@ if (! empty($data)) {
     if (checkPassword($pdo, $password, $data['password'])) {
         $_SESSION['email'] = $email;
         $_SESSION['role'] = $data['role'];
+        $_SESSION['id'] = $data['id'];
         setFlashMessage('success', 'Авторизация прошла успешно.');
         redirect("/users/");
         exit;
