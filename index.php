@@ -7,8 +7,8 @@ if (! isset($_SESSION['email'])) {
     exit;
 }
 
-$pdo = createPDO();
-$users = getUsersList($pdo);
+$users = $db->getUsersList();
+
 $title = "Список пользователей";
 
 include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
