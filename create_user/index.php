@@ -1,5 +1,4 @@
 <?php
-session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
 if ($_SESSION['role'] != 'admin') {

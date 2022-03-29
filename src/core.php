@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 function addUser($pdo, $email, $password)
 {
