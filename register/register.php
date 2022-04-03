@@ -2,18 +2,19 @@
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
 $pdo = createPDO();
-$email = $_POST['email'];
-$password = $_POST['password'];
+$data = $_POST;
+$data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-if (!empty(getUserByEmail($pdo, $email))) {
-    setFlashMessage('danger', '<strong>Уведомление!</strong> Этот эл. адрес уже занят другим пользователем.');
+if (!empty(getUserByEmail($pdo, $_POST['email']))) {
+    setFlashMessage('danger', 'Этот эл. адрес уже занят другим пользователем.');
     redirect("/register/");
     exit;
 }
 
-addUser($pdo, $email, $password);
-$_SESSION['email'] = $email;
-$_SESSION['role'] = 'user';
+$db->set('users', $data);
+
+$_SESSION['email'] = $data['email'];
+$_SESSION['role'] = $data['role'];
 
 setFlashMessage('success', 'Регистрация прошла успешно.');
 redirect("/");
