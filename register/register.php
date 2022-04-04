@@ -11,7 +11,7 @@ if (!empty(getUserByEmail($pdo, $_POST['email']))) {
     exit;
 }
 
-$db->set('users', $data);
+$db->insert('users', $data);
 
 $_SESSION['email'] = $data['email'];
 $_SESSION['role'] = $data['role'];

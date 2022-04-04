@@ -8,10 +8,11 @@ if ($_SESSION['role'] != 'admin') {
 }
 
 $pdo = createPDO();
-$email = $_POST['email'];
+$data = $_POST;
+$data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-if (! empty(getUserByEmail($pdo, $email))) {
-    setFlashMessage('danger', '<strong>Уведомление!</strong> Этот эл. адрес уже занят другим пользователем.');
+if (!empty(getUserByEmail($pdo, $_POST['email']))) {
+    setFlashMessage('danger', 'Этот эл. адрес уже занят другим пользователем.');
     redirect("/create_user/");
     exit;
 }
@@ -20,7 +21,7 @@ $photo = (! empty($_FILES['photo']['name']))
 	? prepareUserPhoto($_FILES['photo'])
 	: 'no_photo.jpg';
 
-$id = addUser($pdo, $email, $_POST['password']);
+$id = $db->insert('users', $data);
 
 setUserInfo( $pdo, $id, $_POST['name'], $_POST['phone'], $_POST['address'], $_POST['position']);
 

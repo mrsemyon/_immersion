@@ -24,7 +24,7 @@ class QueryBuilder
         $statement->execute();
         return $statement->fetchAll();
     }
-    function set($table, $data)
+    function insert($table, $data)
     {
         $keys = implode(', ', array_keys($data));
         $tags = ':' . implode(', :', array_keys($data));

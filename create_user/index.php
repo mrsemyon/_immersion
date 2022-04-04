@@ -34,6 +34,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
         </div>
         <form action="/create_user/create_user.php" method="POST" enctype="multipart/form-data">
             <div class="row">
+                <input name="role" type="hidden" value="user">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
                         <div class="panel-container">
