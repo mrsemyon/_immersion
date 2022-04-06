@@ -7,7 +7,7 @@ if (! isset($_SESSION['email'])) {
     exit;
 }
 
-$users = $db->getUsersList();
+$users = $db->getAll('users');
 
 $title = "Список пользователей";
 

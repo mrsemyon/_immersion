@@ -17,9 +17,9 @@ class QueryBuilder
     {
         $this->pdo = $pdo;
     }
-    function getUsersList()
+    function getAll($table)
     {
-        $sql = "SELECT * FROM users";
+        $sql = "SELECT * FROM $table";
         $statement = $this->pdo->prepare($sql);
         $statement->execute();
         return $statement->fetchAll();
@@ -33,4 +33,5 @@ class QueryBuilder
         $statement->execute($data);
         return $this->pdo->lastInsertId();
     }
+    
 }
