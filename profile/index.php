@@ -12,8 +12,8 @@ if (empty($_GET)) {
     exit;
 }
 
-$pdo = createPDO();
-$user = getUserById($pdo, $_GET['id']);
+$user = $db->getOne('users', $_GET);
+
 $title = "Профиль";
 
 include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';

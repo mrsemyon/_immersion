@@ -24,14 +24,24 @@ class QueryBuilder
         $statement->execute();
         return $statement->fetchAll();
     }
+    function getOne($table, $field)
+    {
+        $sql = "SELECT * FROM $table WHERE ";
+        foreach ($field as $key => $value) {
+            $sql .= $key . '=:' . $key . ' AND ';
+        }
+        $sql = rtrim($sql, ' AND ') . ';';
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute($field);
+        return $statement->fetch();
+    }
     function insert($table, $data)
     {
         $keys = implode(', ', array_keys($data));
-        $tags = ':' . implode(', :', array_keys($data));
-        $sql = "INSERT INTO $table ($keys) VALUES ($tags)";
+        $values = ':' . implode(', :', array_keys($data));
+        $sql = "INSERT INTO $table ($keys) VALUES ($values)";
         $statement = $this->pdo->prepare($sql);
         $statement->execute($data);
         return $this->pdo->lastInsertId();
     }
-    
 }
