@@ -24,24 +24,34 @@ class QueryBuilder
         $statement->execute();
         return $statement->fetchAll();
     }
-    function getOne($table, $field)
+    function getOne($table, $fields)
     {
         $sql = "SELECT * FROM $table WHERE ";
-        foreach ($field as $key => $value) {
+        foreach ($fields as $key => $value) {
             $sql .= $key . '=:' . $key . ' AND ';
         }
         $sql = rtrim($sql, ' AND ') . ';';
         $statement = $this->pdo->prepare($sql);
-        $statement->execute($field);
+        $statement->execute($fields);
         return $statement->fetch();
     }
-    function insert($table, $data)
+    function insert($table, $fields)
     {
-        $keys = implode(', ', array_keys($data));
-        $values = ':' . implode(', :', array_keys($data));
+        $keys = implode(', ', array_keys($fields));
+        $values = ':' . implode(', :', array_keys($fields));
         $sql = "INSERT INTO $table ($keys) VALUES ($values)";
         $statement = $this->pdo->prepare($sql);
-        $statement->execute($data);
+        $statement->execute($fields);
         return $this->pdo->lastInsertId();
+    }
+    function delete($table, $fields)
+    {
+        $sql = "DELETE FROM $table WHERE ";
+        foreach ($fields as $key => $value) {
+            $sql .= $key . '=:' . $key . ' AND ';
+        }
+        $sql = rtrim($sql, ' AND ') . ';';
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute($fields);
     }
 }
