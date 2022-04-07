@@ -1,6 +1,7 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
+$pdo = createPDO();
 $user = $db->getOne('users', $_GET);
 
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {

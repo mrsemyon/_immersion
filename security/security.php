@@ -18,7 +18,7 @@ if (empty($_POST['password']) && ($user['email'] == $_POST['email'])) {
 
 if (! empty($_POST['email'])) {
     if ($_POST['email'] != $user['email']) {
-        if (!empty(getUserByEmail($pdo, $_POST['email']))) {
+        if (!empty($db->getOne('users', ['email' => $_POST['email']]))) {
             setFlashMessage('danger', 'Этот адрес уже занят другим пользователем.');
             redirect("/");
             exit;

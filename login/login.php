@@ -5,7 +5,7 @@ $pdo = createPDO();
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-$data = getUserByEmail($pdo, $email);
+$data = $db->getOne('users', ['email' => $email]);
 
 if (! empty($data)) {
     if (checkPassword($pdo, $password, $data['password'])) {
