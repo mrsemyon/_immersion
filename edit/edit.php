@@ -17,6 +17,7 @@ foreach ($data as $key => $value) {
     }
 }
 
+unset($data['id']);
 $db->update('users', $_GET, $data);
 
 setFlashMessage('success', 'Информация успешно обновлена.');

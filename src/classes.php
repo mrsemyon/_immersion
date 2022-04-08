@@ -50,7 +50,7 @@ class QueryBuilder
         foreach ($data as $key => $value) {
             $sql .= $key . '= :' . $key . ', ';
         }
-        $sql = rtrim($sql, 'id = : id, ') . ' WHERE ';
+        $sql = rtrim($sql, ', ') . ' WHERE ';
         $key = implode(array_keys($_GET));
         $sql .= $key . '= :' . $key . ';';
         $statement = $this->pdo->prepare($sql);

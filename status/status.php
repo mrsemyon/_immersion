@@ -9,7 +9,9 @@ if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     exit;
 }
 
-$db->update('users', $_GET, $_POST);
+$data = $_POST;
+unset($data['id']);
+$db->update('users', $_GET, $data);
 
 setFlashMessage('success', 'Информация успешно обновлена.');
 redirect("/");

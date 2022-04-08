@@ -1,8 +1,7 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
-$pdo = createPDO();
-$user = $db->getOne('users', ['id' => $_POST['id']]);
+$user = $db->getOne('users', $_GET);
 
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     setFlashMessage('danger', 'У Вас недостаточно прав');
@@ -23,15 +22,20 @@ if (! empty($_POST['email'])) {
             redirect("/");
             exit;
         }
-        changeEmail($pdo, $user['id'], $_POST['email']);
+        $db->update('users', $_GET, ['email' => $_POST['email']]);
         if ($_SESSION['role'] != 'admin') {
             $_SESSION['email'] = $_POST['email'];
         }
     }
+} else {
+    setFlashMessage('danger', 'Поле с емейлом не может быть пустым.');
+    redirect("/");
 }
 
+$data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
 if (! empty($_POST['password'])) {
-    changePassword($pdo, $user['id'], $_POST['password']);
+    $db->update('users', $_GET, $data);
 }
 
 setFlashMessage('success', 'Информация успешно обновлена.');

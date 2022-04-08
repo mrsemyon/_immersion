@@ -53,34 +53,6 @@ function createPDO()
     return new PDO($dsn, $user, $pass, $opt);
 }
 
-function changeEmail($pdo, $id, $email)
-{
-    $sql = "UPDATE users SET
-        email = :email
-        WHERE id = :id";
-    $statement = $pdo->prepare($sql);
-    $statement->execute(
-        [
-            'id' => $id,
-            'email' => $email,
-        ]
-    );
-}
-
-function changePassword($pdo, $id, $password)
-{
-    $sql = "UPDATE users SET
-        password = :password
-        WHERE id = :id";
-    $statement = $pdo->prepare($sql);
-    $statement->execute(
-        [
-            'id' => $id,
-            'password' => password_hash($password, PASSWORD_DEFAULT),
-        ]
-    );
-}
-
 function setUserSocialLinks($pdo, $id, $vk, $telegram, $instagram)
 {
     $sql = "UPDATE users SET

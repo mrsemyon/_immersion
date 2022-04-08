@@ -17,6 +17,7 @@ $data['photo'] = (! empty($_FILES['photo']['name']))
 	? prepareUserPhoto($_FILES['photo'])
 	: 'no_photo.jpg';
 
+
 $db->update('users', $_GET, $data);
 
 setFlashMessage('success', 'Аватар успешно обновлён.');
