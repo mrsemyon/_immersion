@@ -1,14 +1,13 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
-$pdo = createPDO();
 $email = $_POST['email'];
 $password = $_POST['password'];
 
 $data = $db->getOne('users', ['email' => $email]);
 
 if (! empty($data)) {
-    if (checkPassword($pdo, $password, $data['password'])) {
+    if (checkPassword($password, $data['password'])) {
         $_SESSION['email'] = $email;
         $_SESSION['role'] = $data['role'];
         $_SESSION['id'] = $data['id'];
