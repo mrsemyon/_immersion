@@ -12,7 +12,7 @@ if (empty($_GET)) {
     exit;
 }
 
-$user = $db->getOne('users', $_GET);
+$user = $db->read('users', $_GET);
 
 $title = "Профиль";
 

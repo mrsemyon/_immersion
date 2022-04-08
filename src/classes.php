@@ -26,23 +26,23 @@ class QueryBuilder
         $statement->execute($data);
         return $this->pdo->lastInsertId();
     }
-    function getAll($table)
+    function read($table, $fields = NULL)
     {
-        $sql = "SELECT * FROM $table";
-        $statement = $this->pdo->prepare($sql);
-        $statement->execute();
-        return $statement->fetchAll();
-    }
-    function getOne($table, $fields)
-    {
-        $sql = "SELECT * FROM $table WHERE ";
-        foreach ($fields as $key => $value) {
-            $sql .= $key . '=:' . $key . ' AND ';
+        if ($fields) {
+            $sql = "SELECT * FROM $table WHERE ";
+            foreach ($fields as $key => $value) {
+                $sql .= $key . '=:' . $key . ' AND ';
+            }
+            $sql = rtrim($sql, ' AND ') . ';';
+            $statement = $this->pdo->prepare($sql);
+            $statement->execute($fields);
+            return $statement->fetch();  
+        } else {
+            $sql = "SELECT * FROM $table";
+            $statement = $this->pdo->prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll();  
         }
-        $sql = rtrim($sql, ' AND ') . ';';
-        $statement = $this->pdo->prepare($sql);
-        $statement->execute($fields);
-        return $statement->fetch();
     }
     function update($table, $field, $data)
     {

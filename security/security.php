@@ -1,7 +1,7 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
-$user = $db->getOne('users', $_GET);
+$user = $db->read('users', $_GET);
 
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     setFlashMessage('danger', 'У Вас недостаточно прав');
@@ -17,7 +17,7 @@ if (empty($_POST['password']) && ($user['email'] == $_POST['email'])) {
 
 if (! empty($_POST['email'])) {
     if ($_POST['email'] != $user['email']) {
-        if (!empty($db->getOne('users', ['email' => $_POST['email']]))) {
+        if (!empty($db->read('users', ['email' => $_POST['email']]))) {
             setFlashMessage('danger', 'Этот адрес уже занят другим пользователем.');
             redirect("/");
             exit;

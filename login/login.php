@@ -4,7 +4,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-$data = $db->getOne('users', ['email' => $email]);
+$data = $db->read('users', ['email' => $email]);
 
 if (! empty($data)) {
     if (checkPassword($password, $data['password'])) {
