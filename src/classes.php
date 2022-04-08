@@ -17,6 +17,15 @@ class QueryBuilder
     {
         $this->pdo = $pdo;
     }
+    function create($table, $data)
+    {
+        $keys = implode(', ', array_keys($data));
+        $values = ':' . implode(', :', array_keys($data));
+        $sql = "INSERT INTO $table ($keys) VALUES ($values)";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute($data);
+        return $this->pdo->lastInsertId();
+    }
     function getAll($table)
     {
         $sql = "SELECT * FROM $table";
@@ -34,15 +43,6 @@ class QueryBuilder
         $statement = $this->pdo->prepare($sql);
         $statement->execute($fields);
         return $statement->fetch();
-    }
-    function insert($table, $data)
-    {
-        $keys = implode(', ', array_keys($data));
-        $values = ':' . implode(', :', array_keys($data));
-        $sql = "INSERT INTO $table ($keys) VALUES ($values)";
-        $statement = $this->pdo->prepare($sql);
-        $statement->execute($data);
-        return $this->pdo->lastInsertId();
     }
     function update($table, $field, $data)
     {

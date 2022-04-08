@@ -7,7 +7,6 @@ if ($_SESSION['role'] != 'admin') {
     exit;
 }
 
-$pdo = createPDO();
 $data = $_POST;
 $data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
@@ -17,19 +16,11 @@ if (!empty($db->getOne('users', ['email' => $_POST['email']]))) {
     exit;
 }
 
-$photo = (! empty($_FILES['photo']['name']))
+$data['photo'] = (! empty($_FILES['photo']['name']))
 	? prepareUserPhoto($_FILES['photo'])
 	: 'no_photo.jpg';
 
-$id = $db->insert('users', $data);
-
-setUserInfo( $pdo, $id, $_POST['name'], $_POST['phone'], $_POST['address'], $_POST['position']);
-
-setUserSocialLinks($pdo, $id, $_POST['vk'], $_POST['telegram'], $_POST['instagram']);
-
-setUserStatus($pdo, $id, $_POST['status']);
-
-setUserPhoto($pdo, $id, $photo);
+$db->create('users', $data);
 
 setFlashMessage('success', 'Пользователь успешно добавлен!');
 redirect("/");

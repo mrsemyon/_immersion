@@ -10,7 +10,7 @@ if (!empty($db->getOne('users', ['email' => $_POST['email']]))) {
     exit;
 }
 
-$db->insert('users', $data);
+$db->create('users', $data);
 
 $_SESSION['email'] = $data['email'];
 $_SESSION['role'] = $data['role'];
