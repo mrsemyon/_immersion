@@ -1,8 +1,7 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
-$pdo = createPDO();
-$user = $db->getOne('users', ['id' => $_POST['id']]);
+$user = $db->getOne('users', $_GET);
 
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     setFlashMessage('danger', 'У Вас недостаточно прав');
@@ -18,14 +17,7 @@ foreach ($data as $key => $value) {
     }
 }
 
-setUserInfo(
-    $pdo,
-    $data['id'],
-    $data['name'],
-    $data['phone'],
-    $data['address'],
-    $data['position']
-);
+$db->update('users', $_GET, $data);
 
 setFlashMessage('success', 'Информация успешно обновлена.');
 redirect("/");

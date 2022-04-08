@@ -20,7 +20,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
             </h1>
 
         </div>
-        <form action="/media/media.php" method="POST" enctype="multipart/form-data">
+        <form action="/media/media.php?id=<?=$user['id']?>" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -32,7 +32,6 @@ include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
                                 <div class="form-group">
                                     <img src="img/demo/authors/josh.png" alt="" class="img-responsive" width="200">
                                 </div>
-                                <input hidden type="text" name="id" class="form-control" value="<?=$user['id']?>">
                                 <div class="form-group">
                                     <label class="form-label" for="example-fileinput">Выберите аватар</label>
                                     <input name="photo" type="file" id="example-fileinput" class="form-control-file">

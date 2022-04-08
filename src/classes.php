@@ -35,14 +35,26 @@ class QueryBuilder
         $statement->execute($fields);
         return $statement->fetch();
     }
-    function insert($table, $fields)
+    function insert($table, $data)
     {
-        $keys = implode(', ', array_keys($fields));
-        $values = ':' . implode(', :', array_keys($fields));
+        $keys = implode(', ', array_keys($data));
+        $values = ':' . implode(', :', array_keys($data));
         $sql = "INSERT INTO $table ($keys) VALUES ($values)";
         $statement = $this->pdo->prepare($sql);
-        $statement->execute($fields);
+        $statement->execute($data);
         return $this->pdo->lastInsertId();
+    }
+    function update($table, $field, $data)
+    {
+        $sql = "UPDATE $table SET ";
+        foreach ($data as $key => $value) {
+            $sql .= $key . '= :' . $key . ', ';
+        }
+        $sql = rtrim($sql, 'id = : id, ') . ' WHERE ';
+        $key = implode(array_keys($_GET));
+        $sql .= $key . '= :' . $key . ';';
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute(array_merge($_GET, $data));
     }
     function delete($table, $fields)
     {

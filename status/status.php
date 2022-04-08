@@ -1,8 +1,7 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
-$pdo = createPDO();
-$user = $db->getOne('users', ['id' => $_POST['id']]);
+$user = $db->getOne('users', $_GET);
 
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     setFlashMessage('danger', 'У Вас недостаточно прав');
@@ -10,7 +9,7 @@ if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     exit;
 }
 
-setUserStatus($pdo, $user['id'], $_POST['status']);
+$db->update('users', $_GET, $_POST);
 
 setFlashMessage('success', 'Информация успешно обновлена.');
 redirect("/");

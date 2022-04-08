@@ -20,7 +20,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
             </h1>
 
         </div>
-        <form action="/edit/edit.php" method="POST">
+        <form action="/edit/edit.php?id=<?=$user['id']?>" method="POST">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -29,7 +29,6 @@ include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
                                 <h2>Общая информация</h2>
                             </div>
                             <div class="panel-content">
-                                <input hidden type="text" name="id" class="form-control" value="<?=$user['id']?>">
                                 <!-- username -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Имя</label>

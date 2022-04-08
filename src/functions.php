@@ -31,6 +31,11 @@ function redirect($path)
     header("Location: " . $path);
 }
 
+function checkPassword($inputPassword, $dbPassword)
+{
+    return password_verify($inputPassword, $dbPassword);
+}
+
 function createPDO()
 {
     $host = '127.0.0.1';
@@ -76,45 +81,6 @@ function changePassword($pdo, $id, $password)
     );
 }
 
-function checkPassword($pdo, $inputPassword, $dbPassword)
-{
-    return password_verify($inputPassword, $dbPassword);
-}
-
-function setUserInfo($pdo, $id, $name, $phone, $address, $position)
-{
-    $sql = "UPDATE users SET
-        name = :name,
-        phone = :phone,
-        address = :address,
-        position = :position
-        WHERE id = :id";
-    $statement = $pdo->prepare($sql);
-    $statement->execute(
-        [
-            'id' => $id,
-            'name' => $name,
-            'phone' => $phone,
-            'address' => $address,
-            'position' => $position,
-        ]
-    );
-}
-
-function setUserPhoto($pdo, $id, $photo)
-{
-    $sql = "UPDATE users SET
-        photo = :photo
-        WHERE id = :id";
-    $statement = $pdo->prepare($sql);
-    $statement->execute(
-        [
-            'id' => $id,
-            'photo' => $photo,
-        ]
-    );
-}
-
 function setUserSocialLinks($pdo, $id, $vk, $telegram, $instagram)
 {
     $sql = "UPDATE users SET
@@ -129,20 +95,6 @@ function setUserSocialLinks($pdo, $id, $vk, $telegram, $instagram)
             'vk' => $vk,
             'telegram' => $telegram,
             'instagram' => $instagram,
-        ]
-    );
-}
-
-function setUserStatus($pdo, $id, $status)
-{
-    $sql = "UPDATE users SET
-        status = :status
-        WHERE id = :id";
-    $statement = $pdo->prepare($sql);
-    $statement->execute(
-        [
-            'id' => $id,
-            'status' => $status,
         ]
     );
 }
