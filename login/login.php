@@ -12,7 +12,7 @@ if (! empty($data)) {
         $_SESSION['role'] = $data['role'];
         $_SESSION['id'] = $data['id'];
         setFlashMessage('success', 'Авторизация прошла успешно.');
-        redirect("/");
+        redirect("/users/");
         exit;
     }
 }

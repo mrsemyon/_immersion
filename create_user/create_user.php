@@ -23,5 +23,5 @@ $data['photo'] = (! empty($_FILES['photo']['name']))
 $db->create('users', $data);
 
 setFlashMessage('success', 'Пользователь успешно добавлен!');
-redirect("/");
+redirect("/users/");
 exit;

@@ -21,5 +21,5 @@ $data['photo'] = (! empty($_FILES['photo']['name']))
 $db->update('users', $_GET, $data);
 
 setFlashMessage('success', 'Аватар успешно обновлён.');
-redirect("/");
+redirect("/users/");
 exit;
