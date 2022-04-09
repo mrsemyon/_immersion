@@ -3,7 +3,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
 if ($_SESSION['role'] != 'admin') {
     setFlashMessage('danger', 'У Вас недостаточно прав');
-    redirect('/');
+    redirect("/users/");
     exit;
 }
 

@@ -8,7 +8,7 @@ if (! isset($_SESSION['email'])) {
 }
 if (empty($_GET)) {
     setFlashMessage('danger', 'Не выбран пользователь');
-    redirect('/');
+    redirect("/users/");
     exit;
 }
 

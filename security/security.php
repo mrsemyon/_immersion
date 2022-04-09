@@ -5,13 +5,13 @@ $user = $db->read('users', $_GET);
 
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     setFlashMessage('danger', 'У Вас недостаточно прав');
-    redirect('/');
+    redirect("/users/");
     exit;
 }
 
 if (empty($_POST['password']) && ($user['email'] == $_POST['email'])) {
     setFlashMessage('danger', 'Информация не была обновлена');
-    redirect('/');
+    redirect("/users/");
     exit;
 }
 

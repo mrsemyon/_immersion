@@ -3,7 +3,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
 if (isset($_SESSION['email'])) {
     setFlashMessage('success', 'Вы уже авторизованы');
-    redirect('/');
+    redirect("/users/");
     exit;
 }
 ?>
