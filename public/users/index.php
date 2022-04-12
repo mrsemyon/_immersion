@@ -3,7 +3,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
 if (! isset($_SESSION['email'])) {
     setFlashMessage('danger', 'Необходима авторизация');
-    redirect('/login/');
+    redirect("/public/login/");
     exit;
 }
 
@@ -37,7 +37,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
             <div class="row">
                 <div class="col-xl-12">
                     <?php if ($_SESSION['role'] == 'admin') { ?>
-                    <a class="btn btn-success" href="/create_user/">Добавить</a>
+                    <a class="btn btn-success" href="/public/create_user/">Добавить</a>
                     <?php } ?>
                     <div class="border-faded bg-faded p-3 mb-g d-flex mt-3">
                         <input type="text" id="js-filter-contacts" name="filter-contacts" class="form-control shadow-inset-2 form-control-lg" placeholder="Найти пользователя">
@@ -62,7 +62,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
                                         <span class="rounded-circle profile-image d-block " style="background-image:url('/upload/<?=$user['photo']?>'); background-size: cover;"></span>
                                     </span>
                                     <div class="info-card-text flex-1">
-                                        <a href="/profile/?id=<?=$user['id']?>"><?=$user['name']?></a>
+                                        <a href="/public/profile/?id=<?=$user['id']?>"><?=$user['name']?></a>
                                         <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
                                             <?php if ($_SESSION['role'] == 'admin' || $user['email'] == $_SESSION['email']) { ?>
                                                 <i class="fal fas fa-cog fa-fw d-inline-block ml-1 fs-md"></i>
@@ -70,20 +70,20 @@ include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
                                             <?php } ?>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="/edit/?id=<?=$user['id']?>">
+                                            <a class="dropdown-item" href="/public/edit/?id=<?=$user['id']?>">
                                                 <i class="fa fa-edit"></i>
                                                 Редактировать</a>
-                                            <a class="dropdown-item" href="/security/?id=<?=$user['id']?>">
+                                            <a class="dropdown-item" href="/public/security/?id=<?=$user['id']?>">
                                                 <i class="fa fa-lock"></i>
                                                 Безопасность</a>
-                                            <a class="dropdown-item" href="/status/?id=<?=$user['id']?>">
+                                            <a class="dropdown-item" href="/public/status/?id=<?=$user['id']?>">
                                                 <i class="fa fa-sun"></i>
                                                 Установить статус</a>
-                                            <a class="dropdown-item" href="/media/?id=<?=$user['id']?>">
+                                            <a class="dropdown-item" href="/public/media/?id=<?=$user['id']?>">
                                                 <i class="fa fa-camera"></i>
                                                 Загрузить аватар
                                             </a>
-                                            <a href="/delete_user/?id=<?=$user['id']?>" class="dropdown-item" onclick="return confirm('are you sure?');">
+                                            <a href="/controllers/delete_user/?id=<?=$user['id']?>" class="dropdown-item" onclick="return confirm('are you sure?');">
                                                 <i class="fa fa-window-close"></i>
                                                 Удалить
                                             </a>

@@ -5,7 +5,7 @@ $user = $db->read('users', $_GET);
 
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     setFlashMessage('danger', 'У Вас недостаточно прав');
-    redirect("/users/");
+    redirect("/public/users/");
     exit;
 }
 
@@ -19,7 +19,7 @@ setFlashMessage('success', 'Пользователь успешно удалён
 
 if ($user['email'] == $_SESSION['email']) {
     session_destroy();
-    redirect('/login/');
+    redirect("/public/login/");
 }
 
-redirect("/users/");
+redirect("/public/users/");

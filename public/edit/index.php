@@ -5,7 +5,7 @@ $user = $db->read('users', $_GET);
 
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     setFlashMessage('danger', 'У Вас недостаточно прав');
-    redirect("/users/");
+    redirect("/public/users/");
     exit;
 }
 
@@ -20,7 +20,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
             </h1>
 
         </div>
-        <form action="/edit/edit.php?id=<?=$user['id']?>" method="POST">
+        <form action="/controllers/edit.php?id=<?=$user['id']?>" method="POST">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">

@@ -3,7 +3,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
 if ($_SESSION['role'] != 'admin') {
     setFlashMessage('danger', 'У Вас недостаточно прав');
-    redirect("/users/");
+    redirect("/public/users/");
     exit;
 }
 
@@ -32,7 +32,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
                 <i class='subheader-icon fal fa-plus-circle'></i> Добавить пользователя
             </h1>
         </div>
-        <form action="/create_user/create_user.php" method="POST" enctype="multipart/form-data">
+        <form action="/controllers/create_user.php" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <input name="role" type="hidden" value="user">
                 <div class="col-xl-6">

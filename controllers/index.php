@@ -5,21 +5,21 @@ $user = $db->read('users', $_GET);
 
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     setFlashMessage('danger', 'У Вас недостаточно прав');
-    redirect("/users/");
+    redirect("/public/users/");
     exit;
 }
+
+$db->delete('users', $_GET);
 
 if ($user['photo'] != 'no_photo.jpg') {
     unlink($_SERVER['DOCUMENT_ROOT'] . '/upload/' . $user['photo']);
 }
 
-$data['photo'] = (! empty($_FILES['photo']['name']))
-	? prepareUserPhoto($_FILES['photo'])
-	: 'no_photo.jpg';
+setFlashMessage('success', 'Пользователь успешно удалён');
 
+if ($user['email'] == $_SESSION['email']) {
+    session_destroy();
+    redirect("/public/login/");
+}
 
-$db->update('users', $_GET, $data);
-
-setFlashMessage('success', 'Аватар успешно обновлён.');
-redirect("/users/");
-exit;
+redirect("/public/users/");

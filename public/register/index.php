@@ -3,7 +3,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
 if (isset($_SESSION['email'])) {
     setFlashMessage('success', 'Вы уже зарегистрированы');
-    redirect("/users/");
+    redirect("/public/users/");
     exit;
 }
 ?>
@@ -75,7 +75,7 @@ if (isset($_SESSION['email'])) {
                                             ?>
                                         </div>
                                     <?php endif; ?>
-                                    <form id="js-login" novalidate="" action="/register/register.php" method="POST">
+                                    <form id="js-login" novalidate="" action="/controllers/register.php" method="POST">
                                         <div class="form-group">
                                             <label class="form-label" for="emailverify">Email</label>
                                             <input name="email" type="email" id="emailverify" class="form-control" placeholder="Эл. адрес" required>

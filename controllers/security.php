@@ -5,13 +5,13 @@ $user = $db->read('users', $_GET);
 
 if (($_SESSION['role'] != 'admin') && ($_SESSION['email'] != $user['email'])) {
     setFlashMessage('danger', 'У Вас недостаточно прав');
-    redirect("/users/");
+    redirect("/public/users/");
     exit;
 }
 
 if (empty($_POST['password']) && ($user['email'] == $_POST['email'])) {
     setFlashMessage('danger', 'Информация не была обновлена');
-    redirect("/users/");
+    redirect("/public/users/");
     exit;
 }
 
@@ -19,7 +19,7 @@ if (! empty($_POST['email'])) {
     if ($_POST['email'] != $user['email']) {
         if (!empty($db->read('users', ['email' => $_POST['email']]))) {
             setFlashMessage('danger', 'Этот адрес уже занят другим пользователем.');
-            redirect("/users/");
+            redirect("/public/users/");
             exit;
         }
         $db->update('users', $_GET, ['email' => $_POST['email']]);
@@ -29,7 +29,7 @@ if (! empty($_POST['email'])) {
     }
 } else {
     setFlashMessage('danger', 'Поле с емейлом не может быть пустым.');
-    redirect("/users/");
+    redirect("/public/users/");
 }
 
 $data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -39,5 +39,5 @@ if (! empty($_POST['password'])) {
 }
 
 setFlashMessage('success', 'Информация успешно обновлена.');
-redirect("/users/");
+redirect("/public/users/");
 exit;

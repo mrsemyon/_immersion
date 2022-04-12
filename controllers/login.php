@@ -12,11 +12,11 @@ if (! empty($data)) {
         $_SESSION['role'] = $data['role'];
         $_SESSION['id'] = $data['id'];
         setFlashMessage('success', 'Авторизация прошла успешно.');
-        redirect("/users/");
+        redirect("/public/users/");
         exit;
     }
 }
 
 setFlashMessage('danger', '<strong>Уведомление!</strong> Неверно введен логин или пароль.');
-redirect("/login/");
+redirect("/public/login/");
 exit;

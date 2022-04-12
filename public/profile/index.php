@@ -3,12 +3,12 @@ include $_SERVER['DOCUMENT_ROOT'] . '/src/core.php';
 
 if (! isset($_SESSION['email'])) {
     setFlashMessage('danger', 'Необходима авторизация');
-    redirect('/login/');
+    redirect("/public/login/");
     exit;
 }
 if (empty($_GET)) {
     setFlashMessage('danger', 'Не выбран пользователь');
-    redirect("/users/");
+    redirect("/public/users/");
     exit;
 }
 

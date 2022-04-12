@@ -6,7 +6,7 @@ $data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
 if (!empty($db->read('users', ['email' => $_POST['email']]))) {
     setFlashMessage('danger', 'Этот эл. адрес уже занят другим пользователем.');
-    redirect("/register/");
+    redirect("/public/register/");
     exit;
 }
 
@@ -16,5 +16,5 @@ $_SESSION['email'] = $data['email'];
 $_SESSION['role'] = $data['role'];
 
 setFlashMessage('success', 'Регистрация прошла успешно.');
-redirect("/users/");
+redirect("/public/users/");
 exit;
